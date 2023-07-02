@@ -22,23 +22,31 @@ async function request<Type>(path: string, res: express.Response): Promise<Await
         res.send(`Request failed: ${error.message}`)
 }
 
+const getFullAddress = ({ street, suite, city, zipcode }: Address): string => {
+    return `[${street}] [${suite}] [${city}] [${zipcode}]`;
+};
+
+const getCoordinatesPair = ({ geo }: Address) => `(${geo.lat}, ${geo.lng})`;
+
 APP.get('/', (req, res) => {
     res.send("Hello world");
 });
 
+// TODO: Refactor to use MVC architecture
+
 APP.get('/users', async (req, res) => {
-    const usersResponse = await request<User[]>('/usersz', res);
+    const usersResponse = await request<User[]>('/users', res);
     const usersData = usersResponse?.map((user: User) => {
         const [firstName, lastName] = user.name.split(" ");
         return {
             id: user.id,
-            prefix: "Mr.",
+            prefix: "Mr.", // TODO: How can I get this value?
             firstName,
             lastName,
             email: user.email,
-            address: "addrs",
-            geolocation: "geo",
-            companyName: "comp"
+            address: getFullAddress(user.address),
+            geolocation: getCoordinatesPair(user.address),
+            companyName: user.company.name
         }
     });
     res.send(usersData);
