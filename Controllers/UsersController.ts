@@ -6,10 +6,20 @@ export class UsersController {
 
     public async getUsers(req: Request, res: Response) {
         try {
-            const usersData = await this.userService.getUsers();
-            res.json(usersData);    
+            const users = await this.userService.getUsers();
+            res.json(users);    
         } catch(error) {
-            res.json({ error });
+            res.status(500).json({ error });
         }
     };
+
+    public async getUserPosts(req: Request, res: Response) {
+        try {
+            const { userId } = req.params;
+            const posts = await this.userService.getUserPost(userId);
+            res.json(posts);
+        } catch (error) {
+            res.status(500).json({ error });
+        }
+    }
 }

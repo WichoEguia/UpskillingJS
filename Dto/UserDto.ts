@@ -1,4 +1,10 @@
 interface UserDto {
-    userId: number,
-    role: string
+    id: string;
+    prefix: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    address: string;
+    geolocation: string;
+    companyName: string;
 }
