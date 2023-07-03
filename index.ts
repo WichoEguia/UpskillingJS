@@ -1,15 +1,38 @@
-import axios, { AxiosError } from 'axios';
 import express from 'express';
+import axios, { AxiosError } from 'axios';
+import jwt from 'jsonwebtoken';
  
-const APP: express.Application = express();
+const APP = express();
 const PORT: number = 3000;
 const BASE_URL = `https://jsonplaceholder.typicode.com`;
 const MAX_RETRIES = 5;
+const TOP_SECRET_FIRM = 'SuperSecretFirm';
+
+// Middleware section
+APP.use(express.json());
+
+function authenticateUser(req: express.Request, res: express.Response, next: express.NextFunction) {
+    const token = req.headers.authorization;
+    if (!token) 
+        return res.status(400)
+            .json({ message: 'missing autherization token' });
+    
+    jwt.verify(token, TOP_SECRET_FIRM, (err, user: UserDto) => {
+        if (err || user.role !== 'ADMIN') 
+            return res.status(403);
+        req.user = user;
+        next();
+    });
+};
+
+APP.get('/', (req, res) => {
+    res.send("Hello world");
+});
 
 async function request<Type>(path: string, res: express.Response): Promise<Awaited<Type | undefined>> {
     let retryCount = 0;
     let error: AxiosError | undefined;
-    while(retryCount < MAX_RETRIES) {
+    while(retryCount < MAX_RETRIES) { 
         try {
             const response = await axios.get(BASE_URL + path);
             return response.data;
@@ -19,7 +42,7 @@ async function request<Type>(path: string, res: express.Response): Promise<Await
         }
     }
     if (!!error)
-        res.send(`Request failed: ${error.message}`)
+        res.json(`Request failed: ${error.message}`)
 }
 
 const getFullAddress = ({ street, suite, city, zipcode }: Address): string => {
@@ -28,13 +51,17 @@ const getFullAddress = ({ street, suite, city, zipcode }: Address): string => {
 
 const getCoordinatesPair = ({ geo }: Address) => `(${geo.lat}, ${geo.lng})`;
 
-APP.get('/', (req, res) => {
-    res.send("Hello world");
-});
-
 // TODO: Refactor to use MVC architecture
 
-APP.get('/users', async (req, res) => {
+APP.get('/login', (req, res) => {
+    const { userId, role }: UserDto = req.body;
+    const token = jwt.sign({ userId, role }, 
+        TOP_SECRET_FIRM, 
+        { expiresIn: '1h' });
+    res.json({ token, expiresIn: '1h' });
+});
+
+APP.get('/users', authenticateUser, async (req, res) => {
     const usersResponse = await request<User[]>('/users', res);
     const usersData = usersResponse?.map((user: User) => {
         const [firstName, lastName] = user.name.split(" ");
@@ -49,7 +76,7 @@ APP.get('/users', async (req, res) => {
             companyName: user.company.name
         }
     });
-    res.send(usersData);
+    res.json(usersData);
 });
 
 APP.listen(PORT, () => {
