@@ -1,4 +1,4 @@
 interface UserDto {
-    userId: number,
-    role: string
+  userId: number;
+  role: string;
 }

@@ -4,7 +4,9 @@
   "description": "Proyecto de upskilling JS",
   "main": "index.js",
   "scripts": {
-    "build": "npx tsc",
+    "prettier": "npx prettier --write .",
+    "prettier-check": "npx prettier --check .",
+    "build": "npm run prettier && npx tsc",
     "start": "node build/index.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js\""
   },
@@ -22,6 +24,7 @@
     "@types/jsonwebtoken": "^9.0.2",
     "concurrently": "^8.2.0",
     "nodemon": "^2.0.22",
+    "prettier": "2.8.8",
     "typescript": "^5.1.6"
   },
   "dependencies": {
