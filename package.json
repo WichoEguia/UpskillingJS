@@ -22,7 +22,10 @@
   "homepage": "https://github.com/WichoEguia/UpskillingJS#readme",
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
     "concurrently": "^8.2.0",
+    "eslint": "^8.44.0",
     "nodemon": "^2.0.22",
     "prettier": "2.8.8",
     "typescript": "^5.1.6"

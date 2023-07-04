@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { UserDto } from '../Dto/LoginDto';
 
 const TOP_SECRET_FIRM = 'SuperSecretFirm';
 

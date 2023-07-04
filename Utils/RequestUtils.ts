@@ -12,10 +12,10 @@ export async function request<Type>(
     try {
       const response = await axios.get(BASE_URL + path);
       return response.data;
-    } catch (err: any) {
+    } catch (err) {
       retryCount++;
-      error = err;
+      error = err as AxiosError;
     }
   }
-  if (!!error) throw new Error(`Request failed: ${error.message}`);
+  if (error) throw new Error(`Request failed: ${error.message}`);
 }
