@@ -1,4 +1,4 @@
-interface PostDto {
+interface PostResponseDto {
     userId: string;
     name: string;
     email: string;
@@ -6,3 +6,5 @@ interface PostDto {
     title: string;
     body: string;
 }
+
+export type UserPostsResponseDto = PostResponseDto[];

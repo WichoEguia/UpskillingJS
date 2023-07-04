@@ -1,6 +1,6 @@
 interface Post {
     userId: string;
     id: string;
-    title: StorageManager;
+    title: string;
     body: string;
 }

@@ -1,3 +1,5 @@
+import { UserPostsResponseDto } from "../Dto/UserPostsResponseDto";
+import { UsersDataResponseDto } from "../Dto/UsersDataResponseDto";
 import { request } from "../Utils/RequestUtils";
 
 export class UserService {
@@ -9,28 +11,30 @@ export class UserService {
         return `(${geo.lat}, ${geo.lng})`;
     }
 
-    public async getUsers(): Promise<UserDto> {
+    public async getUsers(): Promise<UsersDataResponseDto> {
         const usersResponse = await request<User[]>('/users');
-        const usersData: UserDto[] = usersResponse?.map(user => {
-            const [firstName, lastName] = user.name.split(" ");
-            return {
-                id: user.id,
-                prefix: "Mr.", // TODO: How can I get this value?
-                firstName,
-                lastName,
-                email: user.email,
-                address: this.getFullAddress(user.address),
-                geolocation: this.getCoordinatesPair(user.address),
-                companyName: user.company.name
-            }
-        });
+        const usersData: UsersDataResponseDto = usersResponse?.filter(user => !!user)
+            .map(user => {
+                const [firstName, lastName] = user.name.split(" ");
+                return {
+                    id: user.id,
+                    prefix: "Mr.", // TODO: How can I get this value?
+                    firstName,
+                    lastName,
+                    email: user.email,
+                    address: this.getFullAddress(user.address),
+                    geolocation: this.getCoordinatesPair(user.address),
+                    companyName: user.company.name
+                }
+            });
         return usersData;
     };
 
-    public async getUserPost(userId: string): Promise<PostDto[]> {
+    public async getUserPost(userId: string): Promise<UserPostsResponseDto> {
         const userData = await request<User>(`/users/${userId}`);
         const postsResponse = await request<Post[]>(`/users/${userId}/posts`);
-        const postsOver200: PostDto[] = postsResponse?.filter(post => post.body.length > 120)
+        const postsOver200: UserPostsResponseDto = postsResponse?.filter(post => !!post)
+            .filter(post => post.body.length > 120)
             .map(post => {
                 return {
                     userId: post.userId,

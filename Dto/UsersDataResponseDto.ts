@@ -1,4 +1,4 @@
-interface UserDto {
+interface UserResponseDto {
     id: string;
     prefix: string;
     firstName: string;
@@ -8,3 +8,5 @@ interface UserDto {
     geolocation: string;
     companyName: string;
 }
+
+export type UsersDataResponseDto = UserResponseDto[];
