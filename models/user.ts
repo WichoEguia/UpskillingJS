@@ -1,8 +1,8 @@
-import { Address } from "./address";
-import { Company } from "./company";
+import { Address } from "./Address";
+import { Company } from "./Company";
 
 export interface User {
-  id: number;
+  id: string;
   name: string;
   username: string;
   email: string;

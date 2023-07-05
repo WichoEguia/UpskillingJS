@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, { VerifyErrors } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import { UserDto } from '../Dto/LoginDto';
 
@@ -13,8 +13,17 @@ export function authenticateUser(
   if (!token)
     return res.status(400).json({ message: 'missing autherization token' });
 
-  jwt.verify(token, TOP_SECRET_FIRM, (err, user: UserDto) => {
-    if (err || user.role !== 'ADMIN') return res.status(403);
+  jwt.verify(token, TOP_SECRET_FIRM, (err: VerifyErrors, user: UserDto) => {
+    if (err) {
+      return res.status(403)
+        .json({ msg: (err as VerifyErrors).message });
+    }
+
+    if (user.role === 'ADMIN') {
+      return res.status(403)
+        .json({ msg: 'User not allowed' });
+    }
+    
     req.user = user;
     next();
   });

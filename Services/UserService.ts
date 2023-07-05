@@ -45,6 +45,7 @@ export class UserService {
           userId: post.userId,
           name: userData?.name,
           email: userData?.email,
+          postId: post.id,
           title: post.title,
           body: post.body,
         };
