@@ -17,7 +17,7 @@ export class PostsController {
         });
       }
       const post = await this.postService.searchTerm(searchTerm as string);
-      await logToDB(`/posts?search=${searchTerm}`, req.user?.userId, post);
+      await logToDB(req.url, req.user?.userId, post);
       res.json(new BaseResponse<SearchPostDto>(post));
     } catch (error) {
       console.log(error);

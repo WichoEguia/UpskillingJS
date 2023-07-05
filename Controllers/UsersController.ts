@@ -11,7 +11,7 @@ export class UsersController {
   public async getUsers(req: Request, res: Response) {
     try {
       const users = await this.userService.getUsers();
-      await logToDB('/users', req.user?.userId, users);
+      await logToDB(req.url, req.user?.userId, users);
       res.json(new BaseResponse<UsersDataResponseDto>(users));
     } catch (error) {
       console.log(error);
@@ -23,7 +23,7 @@ export class UsersController {
     try {
       const { userId } = req.params;
       const posts = await this.userService.getUserPost(userId);
-      await logToDB(`/users/${req.user?.userId}/posts`, req.user?.userId, posts);
+      await logToDB(req.url, req.user?.userId, posts);
       res.json(new BaseResponse<UserPostsResponseDto>(posts));
     } catch (error) {
       console.log(error);
