@@ -20,13 +20,17 @@ APP.get('/', (req, res) => {
 
 APP.get('/login', (req, res) => authController.login(req, res));
 
-APP.get('/users', authenticateUser, (req, res) => usersController.getUsers(req, res));
+APP.get('/users', authenticateUser, (req, res) =>
+  usersController.getUsers(req, res)
+);
 
 APP.get('/users/:userId/posts', authenticateUser, (req, res) =>
   usersController.getUserPosts(req, res)
 );
 
-APP.get('/posts', authenticateUser, (req, res) => postsController.searchPost(req, res));
+APP.get('/posts', authenticateUser, (req, res) =>
+  postsController.searchPost(req, res)
+);
 
 APP.listen(PORT, () => {
   console.log(`Starting server in port ${PORT}`);

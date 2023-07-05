@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { PostService } from '../Services/PostService';
 import { BaseResponse } from '../Utils/BaseResponse';
 import { SearchPostDto } from '../Dto/SearchPostResponseDto';
+import logToDB from '../Utils/Logger';
 
 export class PostsController {
   private postService = new PostService(); // Should use DI
@@ -16,8 +17,10 @@ export class PostsController {
         });
       }
       const post = await this.postService.searchTerm(searchTerm as string);
+      await logToDB(`/posts?search=${searchTerm}`, req.user?.userId, post);
       res.json(new BaseResponse<SearchPostDto>(post));
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error });
     }
   }
