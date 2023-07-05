@@ -1,7 +1,6 @@
 import { SearchPostDto } from '../Dto/SearchPostResponseDto';
-import { Post } from '../Models/Post';
-import { User } from '../Models/User';
-import { request } from '../Utils/RequestUtils';
+import { mapSearchPostResponse } from '../Utils/MappingUtils';
+import { getPosts, getUserById } from '../Utils/RequestUtils';
 
 export class PostService {
   private searchInStr(text: string, term: string): boolean {
@@ -9,8 +8,8 @@ export class PostService {
   }
 
   public async searchTerm(term: string): Promise<SearchPostDto> {
-    const postsData = await request<Post[]>('/posts');
-    const post = postsData?.find((p) => {
+    const posts = await getPosts();
+    const post = posts?.find((p) => {
       return this.searchInStr(p.title, term) || this.searchInStr(p.body, term);
     });
 
@@ -21,14 +20,7 @@ export class PostService {
       };
     }
 
-    const { email } = (await request<User>(`/users/${post.userId}`)) as User;
-    return {
-      msg: null,
-      post: {
-        postId: post?.id,
-        body: post?.body,
-        email: email,
-      },
-    };
+    const { email } = await getUserById(post.userId);
+    return mapSearchPostResponse(post, email);
   }
 }

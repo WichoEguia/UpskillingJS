@@ -9,7 +9,6 @@ import { authenticateUser } from './Middlewares/Authentication';
 dotenv.config();
 
 const APP = express();
-const PORT = 3000;
 
 APP.use(express.json());
 

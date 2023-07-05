@@ -1,8 +1,8 @@
 interface PostResponseDto {
-  userId: string;
+  userId: number;
   name: string;
   email: string;
-  postId: string;
+  postId: number;
   title: string;
   body: string;
 }

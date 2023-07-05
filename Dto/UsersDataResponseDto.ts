@@ -1,5 +1,5 @@
 interface UserResponseDto {
-  id: string;
+  id: number;
   prefix: string;
   firstName: string;
   lastName: string;
