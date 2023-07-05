@@ -1,9 +1,12 @@
 import express from 'express';
+import dotenv from 'dotenv';
 
 import { AuthController } from './Controllers/AuthController';
 import { UsersController } from './Controllers/UsersController';
 import { PostsController } from './Controllers/PostsController';
 import { authenticateUser } from './Middlewares/Authentication';
+
+dotenv.config();
 
 const APP = express();
 const PORT = 3000;
@@ -33,5 +36,5 @@ APP.get('/posts', authenticateUser, (req, res) =>
 );
 
 APP.listen(PORT, () => {
-  console.log(`Starting server in port ${PORT}`);
+  console.log(`Starting server in port ${process.env.PORT}`);
 });

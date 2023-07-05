@@ -1,10 +1,10 @@
 import { MongoClient } from "mongodb";
 
 async function getConnection() {
-    const client = new MongoClient('mongodb://0.0.0.0:27017');
+    const client = new MongoClient(process.env.MONGO_URL);
     await client.connect();
-    const db = client.db('UpskillingJS');
-    return db.collection('log-collection');
+    const db = client.db(process.env.DB_NAME);
+    return db.collection(process.env.COLLECTION_NAME);
 }
 
 export default async function logToDB<Type>(resourceAccessed: string, userId: string, response: Type) {
