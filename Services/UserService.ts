@@ -2,7 +2,7 @@ import { UserPostsResponseDto } from '../Dto/UserPostsResponseDto';
 import { UsersDataResponseDto } from '../Dto/UsersDataResponseDto';
 import { Post } from '../Models/Post';
 import { Address } from '../Models/Address';
-import { User } from '../Models/user';
+import { User } from '../Models/User';
 import { request } from '../Utils/RequestUtils';
 
 export class UserService {

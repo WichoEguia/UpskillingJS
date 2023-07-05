@@ -1,6 +1,6 @@
 import { SearchPostDto } from '../Dto/SearchPostResponseDto';
 import { Post } from '../Models/Post';
-import { User } from '../Models/user';
+import { User } from '../Models/User';
 import { request } from '../Utils/RequestUtils';
 
 export class PostService {

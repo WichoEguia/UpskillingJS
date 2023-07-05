@@ -1,5 +1,5 @@
-import { Address } from "./Address";
-import { Company } from "./Company";
+import { Address } from './Address';
+import { Company } from './Company';
 
 export interface User {
   id: string;
