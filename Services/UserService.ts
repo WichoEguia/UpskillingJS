@@ -1,6 +1,9 @@
 import { UserPostsResponseDto } from '../Dto/UserPostsResponseDto';
 import { UsersDataResponseDto } from '../Dto/UsersDataResponseDto';
-import { mapGetUserPostsResponse, mapGetUsersResponse } from '../Utils/MappingUtils';
+import {
+  mapGetUserPostsResponse,
+  mapGetUsersResponse,
+} from '../Utils/MappingUtils';
 import { getUserById, getUserPosts, getUsers } from '../Utils/RequestUtils';
 
 export class UserService {
@@ -10,7 +13,10 @@ export class UserService {
   }
 
   public async getUserPost(userId: number): Promise<UserPostsResponseDto> {
-    const [ userData, postsResponse ] = await Promise.all([ getUserById(userId), getUserPosts(userId) ]);
+    const [userData, postsResponse] = await Promise.all([
+      getUserById(userId),
+      getUserPosts(userId),
+    ]);
     return mapGetUserPostsResponse(userData, postsResponse);
   }
 }

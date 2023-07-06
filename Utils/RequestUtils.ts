@@ -5,9 +5,7 @@ import { User } from '../Models/User';
 const BASE_URL = `https://jsonplaceholder.typicode.com`;
 const MAX_RETRIES = 5;
 
-async function request<Type>(
-  path: string
-): Promise<Awaited<Type | undefined>> {
+async function request<Type>(path: string): Promise<Awaited<Type | undefined>> {
   let retryCount = 0;
   let error: AxiosError | undefined;
   while (retryCount < MAX_RETRIES) {
@@ -35,5 +33,5 @@ export async function getUsers(): Promise<User[]> {
 }
 
 export async function getUserPosts(userId: number): Promise<Post[]> {
-  return await request<Post[]>(`/users/${userId}/posts`)
+  return await request<Post[]>(`/users/${userId}/posts`);
 }

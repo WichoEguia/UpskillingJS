@@ -1,8 +1,5 @@
 import { Request, Response } from 'express';
 import { PostService } from '../Services/PostService';
-import { BaseResponse } from '../Utils/BaseResponse';
-import { SearchPostDto } from '../Dto/SearchPostResponseDto';
-import logToDB from '../Utils/Logger';
 
 export class PostsController {
   private postService = new PostService(); // Should use DI
@@ -12,13 +9,15 @@ export class PostsController {
       const searchTerm = req.query.search;
       if (!searchTerm) {
         res.json({
-          msg: 'Missing search term',
-          post: null,
+          response: {
+            msg: 'Missing search term',
+            post: null,
+          },
         });
       }
       const post = await this.postService.searchTerm(searchTerm as string);
-      await logToDB(req.url, req.user?.userId, post);
-      res.json(new BaseResponse<SearchPostDto>(post));
+      res.data = post; // I don't like this solution :(
+      res.json(post);
     } catch (error) {
       console.log(error);
       res.status(500).json({ error });

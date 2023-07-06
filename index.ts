@@ -5,6 +5,7 @@ import { AuthController } from './Controllers/AuthController';
 import { UsersController } from './Controllers/UsersController';
 import { PostsController } from './Controllers/PostsController';
 import { authenticateUser } from './Middlewares/Authentication';
+import { logToDB } from './Middlewares/Logger';
 
 dotenv.config();
 
@@ -22,18 +23,18 @@ APP.get('/', (req, res) => {
 
 APP.get('/login', (req, res) => authController.login(req, res));
 
-APP.get('/users', authenticateUser, (req, res) =>
+APP.get('/users', [authenticateUser, logToDB], (req, res) =>
   usersController.getUsers(req, res)
 );
 
-APP.get('/users/:userId/posts', authenticateUser, (req, res) =>
+APP.get('/users/:userId/posts', [authenticateUser, logToDB], (req, res) =>
   usersController.getUserPosts(req, res)
 );
 
-APP.get('/posts', authenticateUser, (req, res) =>
+APP.get('/posts', [authenticateUser, logToDB], (req, res) =>
   postsController.searchPost(req, res)
 );
 
-APP.listen(PORT, () => {
+APP.listen(process.env.PORT, () => {
   console.log(`Starting server in port ${process.env.PORT}`);
 });

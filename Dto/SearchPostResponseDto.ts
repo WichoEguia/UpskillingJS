@@ -5,6 +5,8 @@ interface PostResponseDto {
 }
 
 export interface SearchPostDto {
-  msg: string | null;
-  post: PostResponseDto | null;
+  response: {
+    msg: string | null;
+    post: PostResponseDto | null;
+  };
 }
