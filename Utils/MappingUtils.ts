@@ -32,7 +32,8 @@ export function mapSearchPostResponse(
 export function mapGetUsersResponse(
   usersResponse: User[]
 ): UsersDataResponseDto {
-  return usersResponse
+  return {
+    response: usersResponse
     .filter((user) => !!user)
     .map((user) => {
       const [firstName, lastName] = user.name.split(' ');
@@ -46,14 +47,16 @@ export function mapGetUsersResponse(
         geolocation: getCoordinatesPair(user.address),
         companyName: user.company.name,
       };
-    });
+    })
+  }
 }
 
 export function mapGetUserPostsResponse(
   userData: User,
   postsData: Post[]
 ): UserPostsResponseDto {
-  return postsData
+  return {
+    response: postsData
     ?.filter((post) => !!post && post.body.length > 120)
     .map((post) => {
       return {
@@ -64,5 +67,6 @@ export function mapGetUserPostsResponse(
         title: post.title,
         body: post.body,
       };
-    });
+    })
+  }
 }

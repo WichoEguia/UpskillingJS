@@ -7,4 +7,6 @@ interface PostResponseDto {
   body: string;
 }
 
-export type UserPostsResponseDto = PostResponseDto[];
+export type UserPostsResponseDto = {
+  response: PostResponseDto[];
+}

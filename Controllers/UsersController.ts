@@ -7,7 +7,7 @@ export class UsersController {
   public async getUsers(req: Request, res: Response) {
     try {
       const users = await this.userService.getUsers();
-      res.data = users; // I don't like this solution :(
+      res.data = JSON.stringify(users); // I don't like this solution :(
       res.json(users);
     } catch (error) {
       console.log(error);
@@ -19,7 +19,7 @@ export class UsersController {
     try {
       const { userId } = req.params;
       const posts = await this.userService.getUserPost(userId);
-      res.data = posts; // I don't like this solution :(
+      res.data = JSON.stringify(posts); // I don't like this solution :(
       res.json(posts);
     } catch (error) {
       console.log(error);

@@ -2,15 +2,13 @@ import axios, { AxiosError } from 'axios';
 import { Post } from '../Models/Post';
 import { User } from '../Models/User';
 
-const BASE_URL = `https://jsonplaceholder.typicode.com`;
-const MAX_RETRIES = 5;
 
 async function request<Type>(path: string): Promise<Awaited<Type | undefined>> {
   let retryCount = 0;
   let error: AxiosError | undefined;
-  while (retryCount < MAX_RETRIES) {
+  while (retryCount < +process.env.MAX_RETRIES) {
     try {
-      const response = await axios.get(BASE_URL + path);
+      const response = await axios.get(process.env.BASE_URL + path);
       return response.data;
     } catch (err) {
       retryCount++;

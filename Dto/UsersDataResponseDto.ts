@@ -9,4 +9,6 @@ interface UserResponseDto {
   companyName: string;
 }
 
-export type UsersDataResponseDto = UserResponseDto[];
+export type UsersDataResponseDto = {
+  response: UserResponseDto[];
+}

@@ -18,10 +18,10 @@ class DBConnection {
   }
 }
 
-export default async function insertLogToCollectoin<Type>(
+export default async function insertLogToCollectoin(
   resourceAccessed: string,
   userId: string,
-  response: Type
+  response: string
 ) {
   const logs = await DBConnection.getConnection();
   logs.insertOne({

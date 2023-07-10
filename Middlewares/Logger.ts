@@ -8,7 +8,7 @@ export function logToDB(
   ) {
     res.on('finish', () => {
         console.log('Finished request to ' + req.path);        
-        insertLogToCollectoin<any>(req.path, req.user?.userId, res.data);
+        insertLogToCollectoin(req.path, req.user?.userId, res.data);
     });
     next();
   }

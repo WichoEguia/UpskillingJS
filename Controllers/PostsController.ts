@@ -16,7 +16,7 @@ export class PostsController {
         });
       }
       const post = await this.postService.searchTerm(searchTerm as string);
-      res.data = post; // I don't like this solution :(
+      res.data = JSON.stringify(post); // I don't like this solution :(
       res.json(post);
     } catch (error) {
       console.log(error);
