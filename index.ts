@@ -1,12 +1,40 @@
 import express from 'express';
- 
-const app: express.Application = express();
-const port: number = 3000;
+import dotenv from 'dotenv';
 
-app.get('/', (_req, _res) => {
-    _res.send("Hello world");
+import { AuthController } from './Controllers/AuthController';
+import { UsersController } from './Controllers/UsersController';
+import { PostsController } from './Controllers/PostsController';
+import { authenticateUser } from './Middlewares/Authentication';
+import { logToDB } from './Middlewares/Logger';
+
+dotenv.config();
+
+const APP = express();
+
+APP.use(express.json());
+
+const authController = new AuthController();
+const usersController = new UsersController();
+const postsController = new PostsController();
+
+APP.get('/', (req, res) => {
+  res.send('Hello world');
 });
 
-app.listen(port, () => {
-    console.log(`Starting server in port ${port}`);
+APP.get('/login', (req, res) => authController.login(req, res));
+
+APP.get('/users', [authenticateUser, logToDB], (req, res) =>
+  usersController.getUsers(req, res)
+);
+
+APP.get('/users/:userId/posts', [authenticateUser, logToDB], (req, res) =>
+  usersController.getUserPosts(req, res)
+);
+
+APP.get('/posts', [authenticateUser, logToDB], (req, res) =>
+  postsController.searchPost(req, res)
+);
+
+APP.listen(process.env.PORT, () => {
+  console.log(`Starting server in port ${process.env.PORT}`);
 });
