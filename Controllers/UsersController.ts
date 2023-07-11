@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { UserService } from '../Services/UserService';
 
-export class UsersController {
+export default class UsersController {
   private userService = new UserService(); // Should use DI
 
   public async getUsers(req: Request, res: Response) {
@@ -18,7 +18,7 @@ export class UsersController {
   public async getUserPosts(req: Request, res: Response) {
     try {
       const { userId } = req.params;
-      const posts = await this.userService.getUserPost(userId);
+      const posts = await this.userService.getUserPost(parseInt(userId));
       res.data = JSON.stringify(posts); // I don't like this solution :(
       res.json(posts);
     } catch (error) {

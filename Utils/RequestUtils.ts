@@ -5,7 +5,8 @@ import { User } from '../Models/User';
 async function request<Type>(path: string): Promise<Awaited<Type | undefined>> {
   let retryCount = 0;
   let error: AxiosError | undefined;
-  while (retryCount < +process.env.MAX_RETRIES) {
+  const maxRetries = parseInt(process.env.MAX_RETRIES) || 3;
+  while (retryCount < maxRetries) {
     try {
       const response = await axios.get(process.env.BASE_URL + path);
       return response.data;

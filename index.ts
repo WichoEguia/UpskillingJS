@@ -1,11 +1,11 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 
-import { AuthController } from './Controllers/AuthController';
-import { UsersController } from './Controllers/UsersController';
-import { PostsController } from './Controllers/PostsController';
-import { authenticateUser } from './Middlewares/Authentication';
-import { logToDB } from './Middlewares/Logger';
+import AuthController from './Controllers/AuthController';
+import UsersController from './Controllers/UsersController';
+import PostsController from './Controllers/PostsController';
+import authenticateUser from './Middlewares/Authentication';
+import logToDB from './Middlewares/Logger';
 
 dotenv.config();
 
@@ -23,15 +23,15 @@ APP.get('/', (req, res) => {
 
 APP.get('/login', (req, res) => authController.login(req, res));
 
-APP.get('/users', [authenticateUser, logToDB], (req, res) =>
+APP.get('/users', [authenticateUser, logToDB], (req: Request, res: Response) =>
   usersController.getUsers(req, res)
 );
 
-APP.get('/users/:userId/posts', [authenticateUser, logToDB], (req, res) =>
+APP.get('/users/:userId/posts', [authenticateUser, logToDB], (req: Request, res: Response) =>
   usersController.getUserPosts(req, res)
 );
 
-APP.get('/posts', [authenticateUser, logToDB], (req, res) =>
+APP.get('/posts', [authenticateUser, logToDB], (req: Request, res: Response) =>
   postsController.searchPost(req, res)
 );
 

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { PostService } from '../Services/PostService';
 
-export class PostsController {
+export default class PostsController {
   private postService = new PostService(); // Should use DI
 
   public async searchPost(req: Request, res: Response) {

@@ -2,7 +2,7 @@ import jwt, { VerifyErrors } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import { UserDto } from '../Dto/LoginDto';
 
-export function authenticateUser(
+export default function authenticateUser(
   req: Request,
   res: Response,
   next: NextFunction
@@ -13,24 +13,24 @@ export function authenticateUser(
 
   jwt.verify(
     token,
-    process.env.TOP_SECRET_FIRM,
-    (err: VerifyErrors, user: UserDto) => {
+    process.env.TOP_SECRET_FIRM || "defaultKey", 
+    (err: VerifyErrors, user: UserDto): void => {
       if (err) {
-        return res.status(403).json({
+        res.status(403).json({
           error: {
             msg: (err as VerifyErrors).message,
           },
         });
       }
-
+  
       if (user.role !== 'ADMIN') {
-        return res.status(403).json({
+        res.status(403).json({
           error: {
             msg: 'User not allowed',
           },
         });
       }
-
+  
       req.user = user;
       next();
     }
