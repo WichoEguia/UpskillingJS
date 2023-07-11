@@ -34,21 +34,21 @@ export function mapGetUsersResponse(
 ): UsersDataResponseDto {
   return {
     response: usersResponse
-    .filter((user) => !!user)
-    .map((user) => {
-      const [firstName, lastName] = user.name.split(' ');
-      return {
-        id: user.id,
-        prefix: 'Mr.', // TODO: How can I get this value?
-        firstName,
-        lastName,
-        email: user.email,
-        address: getFullAddress(user.address),
-        geolocation: getCoordinatesPair(user.address),
-        companyName: user.company.name,
-      };
-    })
-  }
+      .filter((user) => !!user)
+      .map((user) => {
+        const [firstName, lastName] = user.name.split(' ');
+        return {
+          id: user.id,
+          prefix: 'Mr.', // TODO: How can I get this value?
+          firstName,
+          lastName,
+          email: user.email,
+          address: getFullAddress(user.address),
+          geolocation: getCoordinatesPair(user.address),
+          companyName: user.company.name,
+        };
+      }),
+  };
 }
 
 export function mapGetUserPostsResponse(
@@ -57,16 +57,16 @@ export function mapGetUserPostsResponse(
 ): UserPostsResponseDto {
   return {
     response: postsData
-    ?.filter((post) => !!post && post.body.length > 120)
-    .map((post) => {
-      return {
-        userId: post.userId,
-        name: userData?.name,
-        email: userData?.email,
-        postId: post.id,
-        title: post.title,
-        body: post.body,
-      };
-    })
-  }
+      ?.filter((post) => !!post && post.body.length > 120)
+      .map((post) => {
+        return {
+          userId: post.userId,
+          name: userData?.name,
+          email: userData?.email,
+          postId: post.id,
+          title: post.title,
+          body: post.body,
+        };
+      }),
+  };
 }

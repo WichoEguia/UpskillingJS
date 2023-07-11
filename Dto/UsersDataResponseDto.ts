@@ -11,4 +11,4 @@ interface UserResponseDto {
 
 export type UsersDataResponseDto = {
   response: UserResponseDto[];
-}
+};

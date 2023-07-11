@@ -2,7 +2,6 @@ import axios, { AxiosError } from 'axios';
 import { Post } from '../Models/Post';
 import { User } from '../Models/User';
 
-
 async function request<Type>(path: string): Promise<Awaited<Type | undefined>> {
   let retryCount = 0;
   let error: AxiosError | undefined;

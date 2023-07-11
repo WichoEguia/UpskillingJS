@@ -1,2 +1,6 @@
 build
 node_modules
+.vscode
+coverage
+package.json
+package-lock.json

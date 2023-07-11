@@ -9,4 +9,4 @@ interface PostResponseDto {
 
 export type UserPostsResponseDto = {
   response: PostResponseDto[];
-}
+};

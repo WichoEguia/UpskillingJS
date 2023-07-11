@@ -15,8 +15,10 @@ export class PostService {
 
     if (!post) {
       return {
-        msg: `No post found for that term: ${term}`,
-        post: null,
+        response: {
+          msg: `No post found for that term: ${term}`,
+          post: null,
+        },
       };
     }
 
