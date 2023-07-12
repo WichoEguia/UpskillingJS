@@ -13,7 +13,7 @@ export default function authenticateUser(
 
   jwt.verify(
     token,
-    process.env.TOP_SECRET_FIRM || "defaultKey", 
+    process.env.TOP_SECRET_FIRM || 'defaultKey',
     (err: VerifyErrors, user: UserDto): void => {
       if (err) {
         res.status(403).json({
@@ -22,7 +22,7 @@ export default function authenticateUser(
           },
         });
       }
-  
+
       if (user.role !== 'ADMIN') {
         res.status(403).json({
           error: {
@@ -30,7 +30,7 @@ export default function authenticateUser(
           },
         });
       }
-  
+
       req.user = user;
       next();
     }

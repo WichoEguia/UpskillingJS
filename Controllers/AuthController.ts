@@ -5,7 +5,7 @@ import { UserDto } from '../Dto/LoginDto';
 export default class AuthController {
   public login(req: Request, res: Response) {
     const { userId, role }: UserDto = req.body;
-    const key = process.env.TOP_SECRET_FIRM || "defaultKey";
+    const key = process.env.TOP_SECRET_FIRM || 'defaultKey';
     const token = jwt.sign({ userId, role }, key, {
       expiresIn: '1h',
     });

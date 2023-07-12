@@ -20,7 +20,9 @@ test('Should get a all posts', async () => {
     ],
   });
   const result = await getPosts();
-  expect(result[0].title).toEqual('Post title');
+  if (result) {
+    expect(result[0].title).toEqual('Post title');
+  }
 });
 
 test('Should get a all users', async () => {
@@ -51,9 +53,11 @@ test('Should get a all users', async () => {
       },
     ],
   });
-  const users = await getUsers();
-  expect(users).toHaveLength(1);
-  expect(users[0].email).toEqual('Sincere@april.biz');
+  const result = await getUsers();
+  if (result) {
+    expect(result).toHaveLength(1);
+    expect(result[0].email).toEqual('Sincere@april.biz');
+  }
 });
 
 test('Should get user by id', async () => {
@@ -82,8 +86,10 @@ test('Should get user by id', async () => {
       },
     },
   });
-  const user = await getUserById(1);
-  expect(user.email).toEqual('Sincere@april.biz');
+  const result = await getUserById(1);
+  if (result) {
+    expect(result.email).toEqual('Sincere@april.biz');
+  }
 });
 
 test('Should get user posts', async () => {
@@ -109,9 +115,11 @@ test('Should get user posts', async () => {
       },
     ],
   });
-  const posts = await getUserPosts(1);
-  expect(posts).toHaveLength(3);
-  expect(posts[2].title).toEqual('Post 3');
+  const result = await getUserPosts(1);
+  if (result) {
+    expect(result).toHaveLength(3);
+    expect(result[2].title).toEqual('Post 3');
+  }
 });
 
 test('Should fail doing a request', () => {

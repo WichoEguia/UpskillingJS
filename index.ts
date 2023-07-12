@@ -27,8 +27,10 @@ APP.get('/users', [authenticateUser, logToDB], (req: Request, res: Response) =>
   usersController.getUsers(req, res)
 );
 
-APP.get('/users/:userId/posts', [authenticateUser, logToDB], (req: Request, res: Response) =>
-  usersController.getUserPosts(req, res)
+APP.get(
+  '/users/:userId/posts',
+  [authenticateUser, logToDB],
+  (req: Request, res: Response) => usersController.getUserPosts(req, res)
 );
 
 APP.get('/posts', [authenticateUser, logToDB], (req: Request, res: Response) =>

@@ -23,7 +23,7 @@ export function mapSearchPostResponse(
       post: {
         postId: post?.id,
         body: post?.body,
-        email: email,
+        email,
       },
     },
   };
